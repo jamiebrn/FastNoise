@@ -216,6 +216,10 @@ public:
 
 	FN_DECIMAL GetNoise(FN_DECIMAL x, FN_DECIMAL y, FN_DECIMAL z, FN_DECIMAL w) const;
 
+	// 2D Seamless/Tileable Noise generation
+	// ALWAYS uses SimplexFractal noise regardless of selected type
+	FN_DECIMAL GetSimplexFractalSeamless2D(FN_DECIMAL x, FN_DECIMAL y, FN_DECIMAL width, FN_DECIMAL height) const;
+
 private:
 	unsigned char m_perm[512];
 	unsigned char m_perm12[512];

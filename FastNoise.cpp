@@ -328,6 +328,27 @@ FN_DECIMAL FastNoise::GradCoord4D(unsigned char offset, int x, int y, int z, int
 	return xd*GRAD_4D[lutPos] + yd*GRAD_4D[lutPos + 1] + zd*GRAD_4D[lutPos + 2] + wd*GRAD_4D[lutPos + 3];
 }
 
+FN_DECIMAL FastNoise::GetSimplexFractalSeamless2D(FN_DECIMAL x, FN_DECIMAL y, FN_DECIMAL width, FN_DECIMAL height) const
+{
+	float pi2Recip = 0.15915493667f;
+    float xSizePi = width * pi2Recip;
+    float ySizePi = height * pi2Recip;
+    float xFreq = GetFrequency() * xSizePi;
+    float yFreq = GetFrequency() * ySizePi;
+    float xMul = 1.0f / xSizePi;
+    float yMul = 1.0f / ySizePi;
+
+	float xF = x * xMul;
+	float yF = y * yMul;
+
+	float nx = std::cos(xF) * xFreq;
+	float ny = std::cos(yF) * yFreq;
+	float nz = std::sin(xF) * xFreq;
+	float nw = std::sin(yF) * yFreq;
+	
+	return GetSimplexFractal(nx, ny, nz, nw);
+}
+
 FN_DECIMAL FastNoise::GetNoise(FN_DECIMAL x, FN_DECIMAL y, FN_DECIMAL z, FN_DECIMAL w) const
 {
 	x *= m_frequency;
